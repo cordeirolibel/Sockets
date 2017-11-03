@@ -1,38 +1,80 @@
 #include <iostream>
-#include "winsock2.h"
+#include <string>
 
-void AMIencode(int *dataout, int dataSize, int datain[])
+using namespace std;
+
+string ascii_to_bin(string data)
 {
-    int prev;
-    int dataout[0] = 5; // +5 Volts
-
-    prev = dataout[0];
-
-    for(int i=1; i<dataSize;i++)
+    string mensagemBin;
+    int n, r;
+    for(int i=0;i<(int)data.length();i++)
     {
-        if(datain[i] == 1)
+        for(int j=7; j>= 0; j--)
         {
-            dataout[i] = prev*(-1); // Inversão de sinal +5V/-5V
-            prev = dataout[i];
-        }
-        else
-        {
-            dataout[i] = 0; // Sinal 0V
+            n = (int)data[i];
+
+            r = n >> j;
+
+            if(r&1)
+            {
+                mensagemBin += '1';
+            }
+            else
+            {
+                mensagemBin += '0';
+            }
         }
     }
+
+    return mensagemBin;
 }
 
-void AMIdecode(int *dataout, int dataSize, int datain[])
+string bin_to_ami(string data)
 {
-    for(int i=0;i<dataSize;i++)
+    string ami;
+    char prev = '-';
+
+
+    for(int i=0; i<(int)data.length();i++)
     {
-        if(datain[i] == 5 || datain[i] == -5)
+        if(data[i] == '1')
         {
-            dataout[i] = 1; // +5V ou -5V
+            if(prev == '-')
+            {
+                ami += '+';
+                prev = '+';
+            }
+            else
+            {
+                ami += '-';
+                prev = '-';
+            }
         }
         else
         {
-            dataout[i] = 0; // 0V
+            ami += '0';
         }
     }
+
+
+    return ami;
+}
+
+string ami_to_bin(string data)
+{
+    string bin;
+
+    for(int i=0;i<(int)data.length();i++)
+    {
+        if(data[i] == '+' || data[i] == '-')
+        {
+            bin += '1';
+        }
+        else
+        {
+            bin += '0';
+        }
+    }
+
+    return bin;
 }
