@@ -1,3 +1,9 @@
+//========================================================
+// 2017 - UTFPR
+// https://gitlab.com/gabrielsouzaesilva
+// https://github.com/cordeirolibel/ 
+//========================================================
+
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Box.H>
@@ -8,6 +14,7 @@
 
 #include "ClientSocket.h"
 #include "SocketException.h"
+#include "ami.h"
 
 #include <iostream>
 #include <string>
@@ -26,18 +33,6 @@ Fl_Box *bin_receive_box;
 Fl_Box *ami_receive_box;
 Fl_Box *receive_box;
 
-string ascii_to_bin(string str){
-	return ("bin:"+str);
-}
-string bin_to_ami(string str){
-	return ("ami:"+str);
-}
-string ami_to_bin(string str){
-	return (str.substr(4));
-}
-string bin_to_ascii(string str){
-	return (str.substr(4));
-}
 
 void send_button_pushed(Fl_Widget*, long int) {
 
@@ -107,8 +102,8 @@ int main ()
 	///======================================================
 
 	// Criando janela base
-	int w_max = Fl::w()/2.5;
-	int h_max = Fl::h()/2.5;
+	int w_max = Fl::w()/2;
+	int h_max = Fl::h()/2;
 	int w{w_max}, h{h_max};
 	string title{"Client Socket"};
 	window = new Fl_Window(w, 0, w, h, title.c_str());
@@ -132,8 +127,10 @@ int main ()
 	// Binario e AMI send lines
 	bin_send_box = new Fl_Box(w_max*0.05,h_max*0.35,w_max*0.9,h_max*0.05,"Binario: ");
 	bin_send_box->align (FL_ALIGN_TOP_LEFT );
+	bin_send_box->labelsize(9);
 	ami_send_box = new Fl_Box(w_max*0.05,h_max*0.45,w_max*0.9,h_max*0.05,"AMI: ");
 	ami_send_box->align (FL_ALIGN_TOP_LEFT );
+	ami_send_box->labelsize(9);
 
 	// Receive Line
 	receive_box = new Fl_Box (w_max*0.15, h_max*0.55, w_max*0.4, h_max*0.08, "--");
@@ -143,20 +140,21 @@ int main ()
 	// Binario e AMI receive lines
 	bin_receive_box = new Fl_Box(w_max*0.05,h_max*0.75,w_max*0.9,h_max*0.05,"Binario: ");
 	bin_receive_box->align (FL_ALIGN_TOP_LEFT );
+	bin_receive_box->labelsize(9);
 	ami_receive_box = new Fl_Box(w_max*0.05,h_max*0.85,w_max*0.9,h_max*0.05,"AMI: ");
 	ami_receive_box->align (FL_ALIGN_TOP_LEFT );
+	ami_receive_box->labelsize(9);
+
+	window->show();
 
 	///======================================================
 	/// ===== Loop
 	///======================================================
-	window->show();
-
-	int k = 1;
+	
+	//loop principal
 	while (true){
 		Fl::wait(1) ;
 	}
-
-
 
 	return 0;
 }

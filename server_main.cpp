@@ -1,3 +1,9 @@
+//========================================================
+// 2017 - UTFPR
+// https://gitlab.com/gabrielsouzaesilva
+// https://github.com/cordeirolibel/ 
+//========================================================
+
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Box.H>
@@ -7,8 +13,11 @@
 
 #include "ServerSocket.h"
 #include "SocketException.h"
+#include "ami.h"
+
 #include <string>
 #include <iostream>
+
 
 using namespace std;
 Fl_Window *window;
@@ -24,41 +33,33 @@ Fl_Box *bin_receive_box;
 Fl_Box *ami_receive_box;
 Fl_Box *receive_box;
 
-string ascii_to_bin(string str){
-	return ("bin:"+str);
-}
-string bin_to_ami(string str){
-	return ("ami:"+str);
-}
-string ami_to_bin(string str){
-	return (str.substr(4));
-}
-string bin_to_ascii(string str){
-	return (str.substr(4));
-}
 
 void send_button_pushed(Fl_Widget*, long int) {
 
+	//lendo e convertendo
 	string data = send_input->value();
-
 	string bin = ascii_to_bin(data);
 	string ami = bin_to_ami(bin);
 
+	//envia e recebe de volta
 	try	{
 		*new_sock << ami;
 		*new_sock >> ami;
 	}
 	catch ( SocketException& ) {}
 
+	//exibe na tela
 	bin = "Binario: "+bin;
 	ami = "AMI: "+ami;
 	bin_send_box->copy_label(bin.c_str());
 	ami_send_box->copy_label(ami.c_str());
 
+	//exibe no terminal
 	cout << "Send: " << data << endl;
 	cout << "  " << bin << endl;
 	cout << "  " << ami << endl;
 
+	//atualiza tela
 	window->redraw();
 }
 
@@ -66,26 +67,30 @@ void receive_button_pushed(Fl_Widget*, long int) {
 	
 	string data;
 
+	//recebe e envia de volta
 	try	{
 		*new_sock >> data;
 		*new_sock << data;
 	}
 	catch ( SocketException& ) {}
 
+	//convertendo
 	string bin = ami_to_bin(data);
 	string ascii = bin_to_ascii(bin);
 
+	//exibe na tela
 	data = "AMI: "+data;
 	bin = "Binario: "+bin;
 	bin_receive_box->copy_label(bin.c_str());
 	ami_receive_box->copy_label(data.c_str());
 	receive_box->copy_label(ascii.c_str());
-	cout << bin_receive_box->label() << ami_receive_box->label() <<receive_box->label()<< endl;
 
+	//exibe no terminal
 	cout << "Receive: " << ascii << endl;
 	cout << "  " << bin << endl;
 	cout << "  " << data << endl;
 
+	//atualiza tela
 	window->redraw();
 }
 
@@ -108,8 +113,8 @@ int main ( )
 	///======================================================
 
 	// Criando janela base
-	int w_max = Fl::w()/2.5;
-	int h_max = Fl::h()/2.5;
+	int w_max = Fl::w()/2;
+	int h_max = Fl::h()/2;
 	int w{w_max}, h{h_max};
 	string title{"Server Socket"};
 	window = new Fl_Window(w, 0, w, h, title.c_str());
@@ -133,8 +138,10 @@ int main ( )
 	// Binario e AMI send lines
 	bin_send_box = new Fl_Box(w_max*0.05,h_max*0.35,w_max*0.9,h_max*0.05,"Binario: ");
 	bin_send_box->align (FL_ALIGN_TOP_LEFT );
+	bin_send_box->labelsize(9);
 	ami_send_box = new Fl_Box(w_max*0.05,h_max*0.45,w_max*0.9,h_max*0.05,"AMI: ");
 	ami_send_box->align (FL_ALIGN_TOP_LEFT );
+	ami_send_box->labelsize(9);
 
 	// Receive Line
 	receive_box = new Fl_Box (w_max*0.15 , h_max*0.55, w_max*0.4, h_max*0.08, "--");
@@ -144,23 +151,29 @@ int main ( )
 	// Binario e AMI receive lines
 	bin_receive_box = new Fl_Box(w_max*0.05,h_max*0.75,w_max*0.9,h_max*0.05,"Binario: ");
 	bin_receive_box->align (FL_ALIGN_TOP_LEFT );
+	bin_receive_box->labelsize(9);
 	ami_receive_box = new Fl_Box(w_max*0.05,h_max*0.85,w_max*0.9,h_max*0.05,"AMI: ");
 	ami_receive_box->align (FL_ALIGN_TOP_LEFT );
+	ami_receive_box->labelsize(9);
+
+	window->show();
 
 	///======================================================
 	/// ===== Loop
 	///======================================================
 
-	window->show();
-
+	//tempo para que a tela seja exibida
 	int k = 30;
 	while(k--){
 		Fl::wait(0.01);
 	}
 
 	while (true){
+		//esperando cliente
 		new_sock = new ServerSocket;
 		server->accept(*new_sock);
+
+		//loop principal
 		while(true){
 			Fl::wait(1);
 		}
