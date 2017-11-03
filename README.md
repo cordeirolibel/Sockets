@@ -3,6 +3,11 @@ Comunicação de Dados: Ami Socket
 
 FLTK (C++)
 
+![alt text](https://image.ibb.co/gaeadG/server.png)
+![alt text](https://image.ibb.co/jSumkw/cliente.png)
+
+#### AMI:
+
 ![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Ami_encoding.svg/320px-Ami_encoding.svg.png)
 
 ## Linux:
