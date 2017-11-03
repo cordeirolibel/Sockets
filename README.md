@@ -3,6 +3,8 @@ Comunicação de Dados: Ami Socket
 
 FLTK (C++)
 
+![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Ami_encoding.svg/320px-Ami_encoding.svg.png)
+
 ## Linux:
 Instale os seguites pacotes:
 ```
