@@ -78,3 +78,41 @@ string ami_to_bin(string data)
 
     return bin;
 }
+
+string bin_to_ascii(string data)
+{
+    string ascii;
+    string binChar;
+    int pos = 0, decChar=0, pot2 = 128;
+
+    for(int i=0;i<=(int)data.length();i++)
+    {
+            if(data[i] == '1')
+            {
+                decChar += pot2;
+                pot2 = pot2/2;
+                pos++;
+                if(pos == 8)
+                {
+                    ascii += char(decChar);
+                    decChar = 0;
+                    pot2 = 128;
+                    pos = 0;
+                }
+            }
+            else
+            {
+                pot2 = pot2/2;
+                pos++;
+                if(pos == 8)
+                {
+                    ascii += char(decChar);
+                    decChar = 0;
+                    pot2 = 128;
+                    pos = 0;
+                }
+            }
+    }
+
+    return ascii;
+}
