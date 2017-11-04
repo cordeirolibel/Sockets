@@ -28,12 +28,30 @@ make
 
 Para executar o servidor:
 ```
-./server
+./server_main
 ```
 
 Para executar o cliente (Abrir outro terminal):
 ```
-./client
+./client_main
+```
+
+## Windows (Somente executar):
+
+Instale o Ubuntu Bash conforme o tutorial:
+https://www.howtogeek.com/261383/how-to-access-your-ubuntu-bash-files-in-windows-and-your-windows-system-drive-in-bash/
+
+Instale o Xming conforme o tutorial:
+https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/
+
+Com o Xming rodando usar Ubuntu Bash na pasta do projeto e executar
+```
+DISPLAY=:0 ./server_main
+```
+
+Para executar o cliente (Abrir outro Bash):
+```
+DISPLAY=:0 ./client_main
 ```
 
 ## Referências:
