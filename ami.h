@@ -1,3 +1,8 @@
+//========================================================
+// 2017 - UTFPR
+// https://gitlab.com/gabrielsouzaesilva
+// https://github.com/cordeirolibel/ 
+//========================================================
 #include <iostream>
 #include <string>
 
