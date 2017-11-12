@@ -39,7 +39,7 @@ Para executar o cliente (Abrir outro terminal):
 ## Windows (Somente executar):
 
 Instale o Ubuntu Bash conforme o tutorial:
-https://www.howtogeek.com/261383/how-to-access-your-ubuntu-bash-files-in-windows-and-your-windows-system-drive-in-bash/
+https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/
 
 Instale o Xming conforme o tutorial:
 https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/
